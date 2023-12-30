@@ -25,6 +25,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.MYSQL_ADDON_HOST,
     dialect: "mysql",
+    dialectModule: require("mysql2"),
   }
 );
 
