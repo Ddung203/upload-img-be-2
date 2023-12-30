@@ -5,6 +5,7 @@ const options = {
     "Content-Type",
     "Accept",
     "X-Access-Token",
+    "Authorization",
   ],
   credentials: true,
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
