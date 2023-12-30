@@ -17,6 +17,7 @@
 // export default sequelize;
 
 import { Sequelize } from "sequelize";
+import mysql2 from "mysql2";
 
 const sequelize = new Sequelize(
   process.env.MYSQL_ADDON_DB,
@@ -25,7 +26,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.MYSQL_ADDON_HOST,
     dialect: "mysql",
-    dialectModule: "mysql2",
+    dialectModule: mysql2,
   }
 );
 
