@@ -51,6 +51,37 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+app.post("/api/check", authenticateToken(["admin"]), async (req, res) => {
+  try {
+    const { code } = req.body;
+
+    const user = await Data.findOne({
+      where: {
+        userCode: code,
+      },
+    });
+
+    if (user) {
+      return res.status(404).json({
+        code,
+        message: "Thông tin user bị trùng!",
+      });
+    }
+
+    return res.status(200).json({
+      code,
+      message: "Không tìm thấy thông tin của user!",
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    const { code } = req.body;
+    return res.status(404).json({
+      code,
+      message: "Tìm kiếm xảy ra lỗi!",
+    });
+  }
+});
+
 app.post("/api/send", authenticateToken(["admin"]), async (req, res) => {
   try {
     const { code, fullname, note, url } = req.body;
@@ -68,9 +99,10 @@ app.post("/api/send", authenticateToken(["admin"]), async (req, res) => {
     });
   } catch (error) {
     console.error("  >> Lỗi khi thêm mới:", error);
-    return res.status(500).json({
-      error: error || "Internal server error",
-      message: "Xảy ra lỗi khi lưu thông tin user!",
+    const { url } = req.body;
+    return res.status(404).json({
+      url,
+      message: "Thông tin user có lỗi!",
     });
   }
 });
